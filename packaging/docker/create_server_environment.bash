@@ -25,7 +25,7 @@ env_file=$fdb_dir/.fdbenv
 
 : > $env_file
 
-if [[ "$FDB_NETWORKING" == "host" ]]; then
+if [[ "$FDB_NETWORKING_MODE" == "host" ]]; then
 	public_ip=127.0.0.1
 elif [[ "$FDB_NETWORKING_MODE" == "container" ]]; then
 	public_ip=$(grep `hostname` /etc/hosts | sed -e "s/\s *`hostname`//")

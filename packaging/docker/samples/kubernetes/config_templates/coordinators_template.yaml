@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fdb-coordinators-$index
+  labels:
+    clean_tag: fdb-kubernetes-example
+spec:
+  ports:
+    - port: 4500
+  selector:
+    run: fdb-coordinators-$index
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fdb-coordinators-$index
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      run: fdb-coordinators-$index
+  template:
+    metadata:
+      name: fdb-coordinators-$index
+      labels:
+        run: fdb-coordinators-$index
+    spec:
+      containers:
+      - name: foundationdb
+        image: foundationdb:5.2.5
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: FDB_NETWORKING_MODE
+            value: host
+        volumeMounts:
+          - mountPath: /var/fdb/data
+            name: data
+      volumes:
+        - name: data
+          emptyDir: {}
+---

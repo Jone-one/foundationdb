@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: $cluster_name
+spec:
+  replicas: $replica_count
+  selector:
+    matchLabels:
+      run: $cluster_name
+  template:
+    metadata:
+      name: $cluster_name
+      labels:
+        run: $cluster_name
+    spec:
+      containers:
+      - name: foundationdb
+        image: foundationdb:5.2.5
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: FDB_CLUSTER_FILE_CONTENTS
+            value: $cluster_file
+        volumeMounts:
+          - mountPath: /var/fdb/data
+            name: data
+      volumes:
+        - name: data
+          emptyDir: {}
