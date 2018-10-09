@@ -32,7 +32,7 @@ elif [[ "$1" == "cluster" ]]; then
 		| sed -e "s/\$replica_count/$replica_count/g" \
 		| sed -e "s/\$cluster_file/$cluster_file/g" \
 		> $script_dir/config/$cluster_name.yaml
-	echo "Generate $script_dir/config/$cluster_name.yaml"
+	echo "Generated $script_dir/config/$cluster_name.yaml"
 else
 	echo "Unknown command $1"
 	exit 1
