@@ -1,29 +1,29 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fdb-coordinators-$index
+  name: $cluster_name-coordinator-$index
   labels:
     clean_tag: fdb-kubernetes-example
 spec:
   ports:
     - port: 4500
   selector:
-    run: fdb-coordinators-$index
+    run: $cluster_name-coordinator-$index
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fdb-coordinators-$index
+  name: $cluster_name-coordinator-$index
 spec:
   replicas: 1 
   selector:
     matchLabels:
-      run: fdb-coordinators-$index
+      run: $cluster_name-coordinator-$index
   template:
     metadata:
-      name: fdb-coordinators-$index
+      name: $cluster_name-coordinator-$index
       labels:
-        run: fdb-coordinators-$index
+        run: $cluster_name-coordinator-$index
     spec:
       containers:
       - name: foundationdb
